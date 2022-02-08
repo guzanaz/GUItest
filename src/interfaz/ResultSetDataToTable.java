@@ -70,7 +70,7 @@ public class ResultSetDataToTable extends JFrame {
 			public void run() {
 				try {
 					ResultSetDataToTable frame = new ResultSetDataToTable();
-					frame.setVisible(false);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -90,12 +90,12 @@ public class ResultSetDataToTable extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 				
-				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(0, 0, 860, 325);
-				contentPane.add(scrollPane);
+				JScrollPane scrollPane1 = new JScrollPane();
+				scrollPane1.setBounds(0, 0, 860, 325);
+				contentPane.add(scrollPane1);
 				
 						table = new JTable();
-						scrollPane.setViewportView(table);
+						scrollPane1.setViewportView(table);
 		Table1();
 		
 		

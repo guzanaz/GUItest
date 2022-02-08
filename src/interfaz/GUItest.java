@@ -48,13 +48,13 @@ public class GUItest extends JFrame {
 	 */
 	public GUItest() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 500);
+		setBounds(100, 100, 866, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		main_bg.setBackground(new Color(255, 255, 255));
-		main_bg.setBounds(0, 0, 700, 478);
+		main_bg.setBounds(0, 0, 860, 478);
 		contentPane.add(main_bg);
 		main_bg.setLayout(null);
 		
@@ -96,7 +96,16 @@ public class GUItest extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("funciona clickear");
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {												
+						try {
+							ResultSetDataToTable frame = new ResultSetDataToTable();
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
 			}
 		});
 		List_btn.setToolTipText("List all your virtual machine(s)");
@@ -340,7 +349,7 @@ public class GUItest extends JFrame {
 		
 		JPanel action_container = new JPanel();
 		action_container.setForeground(Color.WHITE);
-		action_container.setBounds(223, 56, 477, 108);
+		action_container.setBounds(223, 56, 631, 108);
 		action_container.setBackground(UIManager.getColor("ColorChooser.background"));
 		main_bg.add(action_container);
 		
@@ -353,9 +362,6 @@ public class GUItest extends JFrame {
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 20));
 		lblNewLabel.setBounds(236, 28, 240, 16);
 		main_bg.add(lblNewLabel);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(223, 163, 477, 445);
-		main_bg.add(scrollPane);
+
 	}
 }
