@@ -15,7 +15,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class GUItest extends JFrame {
