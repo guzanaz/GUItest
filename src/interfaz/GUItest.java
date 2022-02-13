@@ -93,8 +93,9 @@ public class GUItest extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				List_btn.setBackground(new Color(211, 211, 211));
 			}
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {												
 						try {
