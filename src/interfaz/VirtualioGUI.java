@@ -1,14 +1,11 @@
 package interfaz;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -18,15 +15,29 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.CardLayout;
+import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
 public class VirtualioGUI extends JFrame {
 
-	private JPanel contentPane;
-	private final JPanel main_bg = new JPanel();
-	private final JLabel Logo = new JLabel("");
-	private final JPanel menu_container = new JPanel();
+	public JPanel contentPane;
+	public final JPanel main_bg = new JPanel();
+	public final JLabel Logo = new JLabel("");
+	public final JPanel menu_container = new JPanel();
+	final static String Default_C="Default_C";
+	final static String List_C="List_C";
+
+	// contenedor cardlayout
+	public final JPanel JPanelCardLayout = new JPanel();
+
+	// contenedor acción por dafault
+	JPanel default_container = new JPanel();
+
+	// contenedor acción listar todas las MVs
+	JPanel allVMs_container = new JPanel();
+
+	
 
 	/**
 	 * Launch the application.
@@ -60,9 +71,56 @@ public class VirtualioGUI extends JFrame {
 		contentPane.add(main_bg);
 		main_bg.setLayout(null);
 
-		menu_container.setBounds(0, 0, 230, 800);
+		// ventana por defecto
+		JPanelCardLayout.setLayout(null);
+		JPanelCardLayout.setBackground(Color.WHITE);
+		JPanelCardLayout.setBounds(0, 0, 1280, 708);
+		main_bg.add(JPanelCardLayout);
+
+		default_container.setLayout(null);
+		default_container.setForeground(Color.DARK_GRAY);
+		default_container.setBorder(null);
+		default_container.setBackground(new Color(255, 255, 0));
+		default_container.setBounds(230, 0, 1050, 708);
+		JPanelCardLayout.add(default_container,Default_C);
+
+		// container por defecto
+		JLabel default_Label = new JLabel("Welcome to Virtualio");
+		default_Label.setForeground(Color.BLACK);
+		default_Label.setFont(new Font("Roboto", Font.BOLD, 20));
+		default_Label.setBounds(35, 33, 315, 16);
+		default_container.add(default_Label);
+
+		// ventana para listar VMs
+		allVMs_container.setBounds(230, 0, 1050, 708);
+		JPanelCardLayout.add(allVMs_container,List_C);
+		allVMs_container.setLayout(null);
+		allVMs_container.setForeground(Color.WHITE);
+		allVMs_container.setBorder(null);
+		allVMs_container.setBackground(UIManager.getColor("Button.select"));
+
+		JLabel AllVMsLabel = new JLabel("All VMs List here!");
+		AllVMsLabel.setForeground(UIManager.getColor("Button.highlight"));
+		AllVMsLabel.setFont(new Font("Roboto", Font.BOLD, 20));
+		AllVMsLabel.setBounds(35, 33, 240, 16);
+		allVMs_container.add(AllVMsLabel);
+
+		JPanel newVM_container = new JPanel();
+		newVM_container.setForeground(Color.WHITE);
+		newVM_container.setBorder(null);
+		newVM_container.setBackground(SystemColor.window);
+		newVM_container.setBounds(230, 0, 1050, 708);
+		JPanelCardLayout.add(newVM_container);
+		newVM_container.setLayout(null);
+
+		JLabel NewVM_Label = new JLabel("Create a New Virtual Machine!!!");
+		NewVM_Label.setBounds(35, 33, 315, 16);
+		NewVM_Label.setForeground(SystemColor.activeCaptionText);
+		NewVM_Label.setFont(new Font("Roboto", Font.BOLD, 20));
+		newVM_container.add(NewVM_Label);
+		menu_container.setBounds(0, 0, 230, 708);
+		JPanelCardLayout.add(menu_container);
 		menu_container.setBackground(new Color(51, 51, 51));
-		main_bg.add(menu_container);
 		menu_container.setLayout(null);
 		Logo.setBounds(0, 0, 230, 205);
 		menu_container.add(Logo);
@@ -140,6 +198,7 @@ public class VirtualioGUI extends JFrame {
 		List_btn.setBounds(0, 406, 230, 101);
 		menu_container.add(List_btn);
 		List_btn.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				List_btn.setBackground(new Color(255, 131, 100));
@@ -152,13 +211,16 @@ public class VirtualioGUI extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// change the jlabel background color
-				List_btn.setBackground(new Color(255, 131, 100));
+				CardLayout cl = (CardLayout)(contentPane.getLayout());
+				cl.show(contentPane, List_C); 
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-
+				// change the jlabel background color
+				List_btn.setBackground(Color.blue);
+				
 			}
 		});
 		List_btn.setToolTipText("List all your Virtual Machine(s)");
@@ -224,9 +286,6 @@ public class VirtualioGUI extends JFrame {
 								.addContainerGap()));
 		ExportPdf_btn.setLayout(gl_ExportPdf_btn);
 
-		// mostrar paneles por separado
-		addActionToMenuLabels();
-
 		JPanel Exit_btn = new JPanel();
 		Exit_btn.setBounds(0, 608, 230, 101);
 		Exit_btn.addMouseListener(new MouseAdapter() {
@@ -277,45 +336,5 @@ public class VirtualioGUI extends JFrame {
 		Exit_btn.setLayout(gl_Exit_btn);
 		menu_container.add(Exit_btn);
 
-		JPanel action_container = new JPanel();
-		action_container.setBorder(null);
-		action_container.setForeground(Color.WHITE);
-		action_container.setBounds(230, 56, 1050, 650);
-		action_container.setBackground(Color.WHITE);
-		main_bg.add(action_container);
-
-		JLabel lblNewLabel = new JLabel("Welcome to Virtualio!");
-		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 20));
-		lblNewLabel.setBounds(255, 22, 240, 16);
-		main_bg.add(lblNewLabel);
-
 	}
-
-	public void addActionToMenuLabels() {
-
-		// get all the labels from the panel menu_container
-		Component[] components = menu_container.getComponents();
-		for (Component component : components) {
-			if (component instanceof JLabel) {
-				JLabel label = (JLabel) component;
-				
-				label.addMouseListener(new MouseAdapter() {
-					
-
-					
-					@Override
-                    public void mouseClicked(MouseEvent e) {
-						label.setBackground(Color.blue);
-                     }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                      }
-
-				});
-				
-			}
-		}
-	}
-
 }
