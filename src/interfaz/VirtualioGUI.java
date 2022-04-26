@@ -13,10 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+
 import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
-import java.awt.SystemColor;
+
 
 @SuppressWarnings("serial")
 public class VirtualioGUI extends JFrame {
@@ -25,18 +25,19 @@ public class VirtualioGUI extends JFrame {
 	public final JPanel main_bg = new JPanel();
 	public final JLabel Logo = new JLabel("");
 	public final JPanel menu_container = new JPanel();
-	final static String Default_C="Default_C";
-	final static String List_C="List_C";
+	
+	
+	
 
 	// contenedor cardlayout
-	public final JPanel JPanelCardLayout = new JPanel();
+	public final JPanel JPanel = new JPanel();
 
 	// contenedor acción por dafault
-	JPanel default_container = new JPanel();
+	public final JPanel containers_container = new JPanel();
+	
+	AllVMs allvms = new AllVMs();
 
-	// contenedor acción listar todas las MVs
-	JPanel allVMs_container = new JPanel();
-
+	CardLayout cl;
 	
 
 	/**
@@ -72,54 +73,24 @@ public class VirtualioGUI extends JFrame {
 		main_bg.setLayout(null);
 
 		// ventana por defecto
-		JPanelCardLayout.setLayout(null);
-		JPanelCardLayout.setBackground(Color.WHITE);
-		JPanelCardLayout.setBounds(0, 0, 1280, 708);
-		main_bg.add(JPanelCardLayout);
+		JPanel.setLayout(null);
+		JPanel.setBackground(null);
+		JPanel.setBounds(0, 0, 1280, 708);
+		main_bg.add(JPanel);
+		containers_container.setForeground(Color.DARK_GRAY);
+		containers_container.setBorder(null);
+		containers_container.setBackground(Color.WHITE);
+		containers_container.setBounds(230, 0, 1050, 708);
+		JPanel.add(containers_container);
+		containers_container.setLayout(new CardLayout(0, 0));
 
-		default_container.setLayout(null);
-		default_container.setForeground(Color.DARK_GRAY);
-		default_container.setBorder(null);
-		default_container.setBackground(new Color(255, 255, 0));
-		default_container.setBounds(230, 0, 1050, 708);
-		JPanelCardLayout.add(default_container,Default_C);
+		cl =(CardLayout) (containers_container.getLayout());
 
-		// container por defecto
-		JLabel default_Label = new JLabel("Welcome to Virtualio");
-		default_Label.setForeground(Color.BLACK);
-		default_Label.setFont(new Font("Roboto", Font.BOLD, 20));
-		default_Label.setBounds(35, 33, 315, 16);
-		default_container.add(default_Label);
 
-		// ventana para listar VMs
-		allVMs_container.setBounds(230, 0, 1050, 708);
-		JPanelCardLayout.add(allVMs_container,List_C);
-		allVMs_container.setLayout(null);
-		allVMs_container.setForeground(Color.WHITE);
-		allVMs_container.setBorder(null);
-		allVMs_container.setBackground(UIManager.getColor("Button.select"));
+		
 
-		JLabel AllVMsLabel = new JLabel("All VMs List here!");
-		AllVMsLabel.setForeground(UIManager.getColor("Button.highlight"));
-		AllVMsLabel.setFont(new Font("Roboto", Font.BOLD, 20));
-		AllVMsLabel.setBounds(35, 33, 240, 16);
-		allVMs_container.add(AllVMsLabel);
-
-		JPanel newVM_container = new JPanel();
-		newVM_container.setForeground(Color.WHITE);
-		newVM_container.setBorder(null);
-		newVM_container.setBackground(SystemColor.window);
-		newVM_container.setBounds(230, 0, 1050, 708);
-		JPanelCardLayout.add(newVM_container);
-		newVM_container.setLayout(null);
-
-		JLabel NewVM_Label = new JLabel("Create a New Virtual Machine!!!");
-		NewVM_Label.setBounds(35, 33, 315, 16);
-		NewVM_Label.setForeground(SystemColor.activeCaptionText);
-		NewVM_Label.setFont(new Font("Roboto", Font.BOLD, 20));
-		newVM_container.add(NewVM_Label);
 		menu_container.setBounds(0, 0, 230, 708);
-		JPanelCardLayout.add(menu_container);
+		JPanel.add(menu_container);
 		menu_container.setBackground(new Color(51, 51, 51));
 		menu_container.setLayout(null);
 		Logo.setBounds(0, 0, 230, 205);
@@ -199,6 +170,7 @@ public class VirtualioGUI extends JFrame {
 		menu_container.add(List_btn);
 		List_btn.addMouseListener(new MouseAdapter() {
 			
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				List_btn.setBackground(new Color(255, 131, 100));
@@ -211,15 +183,15 @@ public class VirtualioGUI extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				CardLayout cl = (CardLayout)(contentPane.getLayout());
-				cl.show(contentPane, List_C); 
-
+				containers_container.add(allvms,"listVMs");
+				cl.show(containers_container, "listVMs");
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// change the jlabel background color
 				List_btn.setBackground(Color.blue);
+
 				
 			}
 		});
