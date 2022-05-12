@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -26,8 +28,6 @@ public class VirtualioGUI extends JFrame {
 	public final JLabel Logo = new JLabel("");
 	public final JPanel menu_container = new JPanel();
 	
-	
-	
 
 	// contenedor cardlayout
 	public final JPanel JPanel = new JPanel();
@@ -36,6 +36,7 @@ public class VirtualioGUI extends JFrame {
 	public final JPanel containers_container = new JPanel();
 	
 	AllVMs allvms = new AllVMs();
+	CreateVM createVM = new CreateVM();
 
 	CardLayout cl;
 	
@@ -75,12 +76,12 @@ public class VirtualioGUI extends JFrame {
 		// ventana por defecto
 		JPanel.setLayout(null);
 		JPanel.setBackground(null);
-		JPanel.setBounds(0, 0, 1280, 708);
+		JPanel.setBounds(0, 0, 1281, 708);
 		main_bg.add(JPanel);
 		containers_container.setForeground(Color.DARK_GRAY);
 		containers_container.setBorder(null);
-		containers_container.setBackground(Color.WHITE);
-		containers_container.setBounds(230, 0, 1050, 708);
+		containers_container.setBackground(Color.blue);
+		containers_container.setBounds(230, 0, 1052, 708);
 		JPanel.add(containers_container);
 		containers_container.setLayout(new CardLayout(0, 0));
 
@@ -99,29 +100,45 @@ public class VirtualioGUI extends JFrame {
 		Logo.setIcon(new ImageIcon(VirtualioGUI.class.getResource("/com/images/logomenu_150x170px.png")));
 
 		JPanel Create_btn = new JPanel();
+		Create_btn.setBounds(0, 303, 230, 101);
+		menu_container.add(Create_btn);
 		Create_btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				Create_btn.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.white));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
 				Create_btn.setBackground(new Color(255, 131, 100));
 			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				Create_btn.setBackground(new Color(51, 51, 51));
-			}
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				Create_btn.setBackground(new Color(51, 51, 51));
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				Create_btn.setBorder(BorderFactory.createEmptyBorder());
+				
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Create_btn.setBackground(new Color(255, 131, 100));
+				containers_container.add(allvms,"listVMs");
+				cl.show(containers_container, "listVMs");
+				containers_container.revalidate();
+				containers_container.repaint();
+				
 			}
 		});
+
 		Create_btn.setToolTipText("Create a new Virtual Machine");
 		Create_btn.setMaximumSize(new Dimension(32780, 32767));
 		Create_btn.setForeground(Color.DARK_GRAY);
 		Create_btn.setFont(new Font("Roboto", Font.BOLD, 20));
 		Create_btn.setBackground(new Color(51, 51, 51));
-		Create_btn.setBounds(0, 305, 230, 101);
-		menu_container.add(Create_btn);
-
+		
+		
 		JLabel Create_icon_1 = new JLabel("");
 		Create_icon_1.setIcon(new ImageIcon(VirtualioGUI.class.getResource("/com/images/add_circle_outline.png")));
 		Create_icon_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -152,46 +169,58 @@ public class VirtualioGUI extends JFrame {
 		ExportPdf_btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				ExportPdf_btn.setBackground(new Color(255, 131, 100));
+				ExportPdf_btn.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.white));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				ExportPdf_btn.setBackground(new Color(51, 51, 51));
+				ExportPdf_btn.setBorder(BorderFactory.createEmptyBorder());
 			}
 
 			@Override
+			public void mousePressed(MouseEvent e) {
+				ExportPdf_btn.setBackground(new Color(255, 131, 100));
+			}
+			@Override
 			public void mouseReleased(MouseEvent e) {
+				ExportPdf_btn.setBackground(new Color(51, 51, 51));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ExportPdf_btn.setBackground(new Color(255, 131, 100));
+				//función descargar pdf con el estado de las máquinas
 			}
 		});
 
 		JPanel List_btn = new JPanel();
-		List_btn.setBounds(0, 406, 230, 101);
+		List_btn.setBounds(0, 404, 230, 101);
 		menu_container.add(List_btn);
 		List_btn.addMouseListener(new MouseAdapter() {
-			
-			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				List_btn.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.white));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
 				List_btn.setBackground(new Color(255, 131, 100));
 			}
-
 			@Override
-			public void mouseExited(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				List_btn.setBackground(new Color(51, 51, 51));
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				List_btn.setBorder(BorderFactory.createEmptyBorder());
 			}
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				List_btn.setBackground(new Color(255, 131, 100));
 				containers_container.add(allvms,"listVMs");
 				cl.show(containers_container, "listVMs");
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// change the jlabel background color
-				List_btn.setBackground(Color.blue);
-
+				containers_container.revalidate();
+				containers_container.repaint();
 				
 			}
 		});
@@ -230,7 +259,7 @@ public class VirtualioGUI extends JFrame {
 		ExportPdf_btn.setForeground(Color.DARK_GRAY);
 		ExportPdf_btn.setFont(new Font("Roboto", Font.BOLD, 20));
 		ExportPdf_btn.setBackground(new Color(51, 51, 51));
-		ExportPdf_btn.setBounds(0, 507, 230, 101);
+		ExportPdf_btn.setBounds(0, 505, 230, 101);
 		menu_container.add(ExportPdf_btn);
 
 		JLabel exportPDF_icon = new JLabel("");
@@ -259,22 +288,31 @@ public class VirtualioGUI extends JFrame {
 		ExportPdf_btn.setLayout(gl_ExportPdf_btn);
 
 		JPanel Exit_btn = new JPanel();
-		Exit_btn.setBounds(0, 608, 230, 101);
+		Exit_btn.setBounds(0, 606, 230, 101);
 		Exit_btn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				Exit_btn.setBackground(new Color(255, 131, 100));
+				Exit_btn.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.white));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
+				Exit_btn.setBorder(BorderFactory.createEmptyBorder());
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Exit_btn.setBackground(new Color(255, 131, 100));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
 				Exit_btn.setBackground(new Color(51, 51, 51));
 			}
-
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
 			}
+
 		});
 		Exit_btn.setToolTipText("Exit and close virtualio");
 		Exit_btn.setMaximumSize(new Dimension(32780, 32767));
